@@ -124,16 +124,27 @@ bool Keyboard::keyboardVisible() const
 void Keyboard::buttonClicked(int key)
 {
     #ifdef Q_OS_WIN
-        INPUT vkey;
-        vkey.type = INPUT_KEYBOARD;
-        vkey.ki.wScan = 0; // hardware scan code for key
-        vkey.ki.time = 0;
-        vkey.ki.dwExtraInfo = 0;
-        vkey.ki.wVk = key; // virtual-key code for the "a" key
-        vkey.ki.dwFlags = 0; // 0 for key press
-        SendInput(1, &vkey, sizeof(INPUT));
+    INPUT vkey;
+    vkey.type = INPUT_KEYBOARD;
+    vkey.ki.wScan = 0; // hardware scan code for key
+    vkey.ki.time = 0;
+    vkey.ki.dwExtraInfo = 0;
+    switch(key) {
+    case Qt::Key_Enter: vkey.ki.wVk = VK_RETURN;
+        break;
+    case Qt::Key_Backspace: vkey.ki.wVk = VK_BACK;
+        break;
+    case Qt::Key_Any : this->hideKeyboard();
+        break;
+    case Qt::Key_Shift : vkey.ki.wVk = VK_SHIFT;
+    default : vkey.ki.wVk = key; // virtual-key code
+    }
+    vkey.ki.dwFlags = 0; // 0 for key press
+    SendInput(1, &vkey, sizeof(INPUT));
+    if (key != Qt::Key_Shift) {
         vkey.ki.dwFlags = KEYEVENTF_KEYUP; // KEYEVENTF_KEYUP for key release
         SendInput(1, &vkey, sizeof(INPUT));
-        return;
+    }
+    return;
     #endif
 }

@@ -1,7 +1,7 @@
 # CSCI 150
 ## Keyboard Project Fall 2016
 ### Group:
-* Christopher Bohlin
+* Christopher Bohlin (lead)
 * Justin Short
 * Maria Espinoza
 * Jason Pieros
