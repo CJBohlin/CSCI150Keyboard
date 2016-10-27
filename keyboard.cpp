@@ -11,6 +11,7 @@
 #include <QPushButton>
 
 #define NEXT_ROW_MARKER 0
+#define HideKey 0
 
 struct KeyboardLayoutEntry{
     int key;
@@ -58,20 +59,22 @@ KeyboardLayoutEntry keyboardLayout[] = {
     { Qt::Key_B, "b" },
     { Qt::Key_N, "n" },
     { Qt::Key_M, "m" },
-    { Qt::Key_Enter, "Enter" }
+    { Qt::Key_Enter, "Enter" },
+    { Qt::Key_Any, "Hide" },
+    { Qt::Key_Shift, "Shift" }
 };
 
 const static int layoutSize = (sizeof(keyboardLayout) / sizeof(KeyboardLayoutEntry));
 
-static QString keyToCharacter(int key)
-{
-    for (int i = 0; i < layoutSize; ++i) {
-        if (keyboardLayout[i].key == key)
-            return QString::fromLatin1(keyboardLayout[i].label);
-    }
+//static QString keyToCharacter(int key)
+//{
+//    for (int i = 0; i < layoutSize; ++i) {
+//        if (keyboardLayout[i].key == key)
+//            return QString::fromLatin1(keyboardLayout[i].label);
+//    }
 
-    return QString();
-}
+//    return QString();
+//}
 
 Keyboard::Keyboard(QWidget *parent)
     : QWidget(parent)
@@ -94,9 +97,9 @@ Keyboard::Keyboard(QWidget *parent)
         }
 
         QPushButton *button = new QPushButton;
-        button->setFixedWidth(70);
+        button->setFixedWidth(40);
         button->setText(QString::fromLatin1(keyboardLayout[i].label));
-        button->setStyleSheet("background-color: black; color:white;border-width: 4px;");
+
         mapper->setMapping(button, keyboardLayout[i].key);
         connect(button, SIGNAL(clicked()), mapper, SLOT(map()));
 
@@ -124,16 +127,27 @@ bool Keyboard::keyboardVisible() const
 void Keyboard::buttonClicked(int key)
 {
     #ifdef Q_OS_WIN
-        INPUT vkey;
-        vkey.type = INPUT_KEYBOARD;
-        vkey.ki.wScan = 0; // hardware scan code for key
-        vkey.ki.time = 0;
-        vkey.ki.dwExtraInfo = 0;
-        vkey.ki.wVk = key; // virtual-key code for the "a" key
-        vkey.ki.dwFlags = 0; // 0 for key press
-        SendInput(1, &vkey, sizeof(INPUT));
+    INPUT vkey;
+    vkey.type = INPUT_KEYBOARD;
+    vkey.ki.wScan = 0; // hardware scan code for key
+    vkey.ki.time = 0;
+    vkey.ki.dwExtraInfo = 0;
+    switch(key) {
+    case Qt::Key_Enter: vkey.ki.wVk = VK_RETURN;
+        break;
+    case Qt::Key_Backspace: vkey.ki.wVk = VK_BACK;
+        break;
+    case Qt::Key_Any : this->hideKeyboard();
+        break;
+    case Qt::Key_Shift : vkey.ki.wVk = VK_SHIFT;
+    default : vkey.ki.wVk = key; // virtual-key code
+    }
+    vkey.ki.dwFlags = 0; // 0 for key press
+    SendInput(1, &vkey, sizeof(INPUT));
+    if (key != Qt::Key_Shift) {
         vkey.ki.dwFlags = KEYEVENTF_KEYUP; // KEYEVENTF_KEYUP for key release
         SendInput(1, &vkey, sizeof(INPUT));
-        return;
+    }
+    return;
     #endif
 }

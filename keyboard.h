@@ -9,7 +9,6 @@ class Keyboard : public QWidget
 
 public:
     explicit Keyboard(QWidget *parent = Q_NULLPTR);
-    int offset=0;
 
 public slots:
     void showKeyboard(int globalX, int globalY);
