@@ -23,9 +23,8 @@ int main(int argc, char **argv)
     Keyboard keyboard;
     keyboard.showKeyboard((horizontal-900)/2,vertical-600);
     HWND winHandle=(HWND)keyboard.winId();
-        ShowWindow(winHandle, SW_HIDE);
-        SetWindowLong(winHandle, GWL_EXSTYLE, GetWindowLong(winHandle, GWL_EXSTYLE)
-            | WS_EX_NOACTIVATE | WS_EX_APPWINDOW);
+    SetWindowLong(winHandle, GWL_EXSTYLE, GetWindowLong(winHandle, GWL_EXSTYLE)
+        | WS_EX_NOACTIVATE | WS_EX_APPWINDOW);
     ShowWindow(winHandle, SW_SHOW);
     keyboard.setWindowTitle(" ");
     return app.exec();
