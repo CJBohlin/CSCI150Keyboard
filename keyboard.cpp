@@ -41,6 +41,7 @@ KeyboardLayoutEntry keyboardLayout[] = {
     { Qt::Key_O, "o" },
     { Qt::Key_P, "p" },
     { NEXT_ROW_MARKER, 0 },
+    { Qt::Key_CapsLock, "Caps" },
     { Qt::Key_A, "a" },
     { Qt::Key_S, "s" },
     { Qt::Key_D, "d" },
@@ -50,6 +51,7 @@ KeyboardLayoutEntry keyboardLayout[] = {
     { Qt::Key_J, "j" },
     { Qt::Key_K, "k" },
     { Qt::Key_L, "l" },
+    { Qt::Key_Enter, "Enter" },
     { NEXT_ROW_MARKER, 0 },
     { Qt::Key_Y, "y" },
     { Qt::Key_X, "x" },
@@ -58,7 +60,8 @@ KeyboardLayoutEntry keyboardLayout[] = {
     { Qt::Key_B, "b" },
     { Qt::Key_N, "n" },
     { Qt::Key_M, "m" },
-    { Qt::Key_Enter, "Enter" }
+    { Qt::Key_Space, "Space" },
+    { Qt::Key_Shift, "Shift" }
 };
 
 const static int layoutSize = (sizeof(keyboardLayout) / sizeof(KeyboardLayoutEntry));
@@ -134,16 +137,26 @@ void Keyboard::buttonClicked(int key)
         break;
     case Qt::Key_Backspace: vkey.ki.wVk = VK_BACK;
         break;
-    case Qt::Key_Any : this->hideKeyboard();
+    case Qt::Key_Space : vkey.ki.wVk = VK_SPACE;
         break;
     case Qt::Key_Shift : vkey.ki.wVk = VK_SHIFT;
+        break;
+    case Qt::Key_CapsLock : vkey.ki.wVk = VK_CAPITAL;
+        break;
+    case 0 : this->hideKeyboard();
+        break;
     default : vkey.ki.wVk = key; // virtual-key code
     }
     vkey.ki.dwFlags = 0; // 0 for key press
     SendInput(1, &vkey, sizeof(INPUT));
-    if (key != Qt::Key_Shift) {
+    if ((key != Qt::Key_Shift)) {
         vkey.ki.dwFlags = KEYEVENTF_KEYUP; // KEYEVENTF_KEYUP for key release
         SendInput(1, &vkey, sizeof(INPUT));
+        if (GetKeyState(VK_SHIFT)) {
+            vkey.ki.wVk = VK_SHIFT;
+            vkey.ki.dwFlags = KEYEVENTF_KEYUP; // KEYEVENTF_KEYUP for key release
+            SendInput(1, &vkey, sizeof(INPUT));
+        }
     }
     return;
     #endif
