@@ -35,7 +35,7 @@ KeyboardLayoutEntry keyboardLayout[] = {
     { Qt::Key_E, "e" },
     { Qt::Key_R, "r" },
     { Qt::Key_T, "t" },
-    { Qt::Key_Z, "z" },
+    { Qt::Key_Y, "y" },
     { Qt::Key_U, "u" },
     { Qt::Key_I, "i" },
     { Qt::Key_O, "o" },
@@ -53,7 +53,7 @@ KeyboardLayoutEntry keyboardLayout[] = {
     { Qt::Key_L, "l" },
     { Qt::Key_Enter, "Enter" },
     { NEXT_ROW_MARKER, 0 },
-    { Qt::Key_Y, "y" },
+    { Qt::Key_Z, "z" },
     { Qt::Key_X, "x" },
     { Qt::Key_C, "c" },
     { Qt::Key_V, "v" },
@@ -147,7 +147,8 @@ void Keyboard::buttonClicked(int key)
         break;
     default : vkey.ki.wVk = key; // virtual-key code
     }
-    vkey.ki.dwFlags = 0; // 0 for key press
+    if (key == Qt::Key_Shift && GetKeyState(VK_SHIFT)) vkey.ki.dwFlags = KEYEVENTF_KEYUP;
+    else vkey.ki.dwFlags = 0; // 0 for key press
     SendInput(1, &vkey, sizeof(INPUT));
     if ((key != Qt::Key_Shift)) {
         vkey.ki.dwFlags = KEYEVENTF_KEYUP; // KEYEVENTF_KEYUP for key release
