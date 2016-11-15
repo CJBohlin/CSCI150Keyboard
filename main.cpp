@@ -6,26 +6,31 @@
 #include <QMainWindow>
 #include <QMenu>
 #include <iostream>
+#include "mainwindow.h"
+
 int main(int argc, char **argv)
 {
-    QApplication app(argc, argv);
-    QPalette pal = app.palette();
-    pal.setColor(QPalette::Window, Qt::lightGray);
-    app.setPalette(pal);
-    app.setStyleSheet("#myObject { border: 5px solid black; }");
-
+    QApplication *app = new QApplication(argc, argv);
+    QPalette pal = app->palette();
+    pal.setColor(QPalette::Window, Qt::gray);
+    app->setPalette(pal);
     RECT desktop;
     const HWND hDesktop = GetDesktopWindow();
     GetWindowRect(hDesktop, &desktop);
-    double horizontal = desktop.right;
-    double vertical = desktop.bottom;
+    Keyboard* keyboard = new Keyboard;
+    MainWindow* window = new MainWindow;
 
-    Keyboard keyboard;
-    keyboard.showKeyboard((horizontal-900)/2,vertical-600);
-    HWND winHandle=(HWND)keyboard.winId();
-    SetWindowLong(winHandle, GWL_EXSTYLE, GetWindowLong(winHandle, GWL_EXSTYLE)
-        | WS_EX_NOACTIVATE | WS_EX_APPWINDOW);
+    window->setCentralWidget(keyboard);
+    window->show();
+    keyboard->showKeyboard(0,0);
+
+    HWND winHandle=(HWND)window->winId();
+        ShowWindow(winHandle, SW_HIDE);
+        SetWindowLong(winHandle, GWL_EXSTYLE, GetWindowLong(winHandle, GWL_EXSTYLE)
+            | WS_EX_NOACTIVATE | WS_EX_APPWINDOW);
     ShowWindow(winHandle, SW_SHOW);
-    keyboard.setWindowTitle(" ");
-    return app.exec();
+    keyboard->setWindowTitle(" ");
+
+
+    return app->exec();
 }
