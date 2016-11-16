@@ -83,6 +83,27 @@ KeyboardLayoutEntry keyboardLayoutLower[] = {
     { Qt::Key_Space, "Space" }
 };
 
+/*BOOL WINAPI GetKeyboardState(    poss use for changing keyboard layout for shift
+/  _Out_ PBYTE lpKeyState
+  { Qt::Key_Backspace, "<-" },
+    { NEXT_ROW_MARKER, 0 },
+    { Qt::Key_1, "!" },
+    { Qt::Key_2, "@" },
+    { Qt::Key_3, "#" },
+    { Qt::Key_4, "$" },
+    { Qt::Key_5, "%" },
+    { Qt::Key_6, "^" },
+    { Qt::Key_7, "&" },
+    { Qt::Key_8, "*" },
+    { Qt::Key_9, "(" },
+    { Qt::Key_0, ")" },
+BOOL WINAPI GetKeyboardState(
+  _Out_ PBYTE lpKeyState
+);
+    pC while Shift
+    
+)
+*/
 const static int layoutSize = (sizeof(keyboardLayoutLower) / sizeof(KeyboardLayoutEntry));
 
 static QString keyToCharacter(int key)
