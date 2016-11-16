@@ -212,4 +212,4 @@ void Keyboard::buttonClicked(int key)
     return;
     #endif
 }
-
+//added symbols like ; , . ' and WINKEY
