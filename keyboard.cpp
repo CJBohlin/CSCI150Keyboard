@@ -31,10 +31,10 @@ KeyboardLayoutEntry keyboardLayoutLower[] = {
     { Qt::Key_F7,"F7"},
     { Qt::Key_F8,"F8"},
     { Qt::Key_F9,"F9"},
-    //{ Qt::Key_F1,"F10"},
-    //{ Qt::Key_F1,"F11"},
-    //{ Qt::Key_F1,"F12"},
-    //{ Qt::Key_PowerOff,"Power"},
+    { Qt::Key_F1,"F10"},
+    { Qt::Key_F1,"F11"},
+    { Qt::Key_F1,"F12"},
+    { Qt::Key_PowerOff,"Power"},
     { Qt::Key_Backspace, "<-" },
     { NEXT_ROW_MARKER, 0 },
     { Qt::Key_1, "1" },
@@ -80,7 +80,19 @@ KeyboardLayoutEntry keyboardLayoutLower[] = {
     { Qt::Key_N, "n" },
     { Qt::Key_M, "m" },
     { Qt::Key_Enter, "Enter" },
-    { Qt::Key_Space, "Space" }
+    { Qt::Key_Left, "Left"},
+    { Qt::Key_Down, "Down" },
+    { Qt::Key_Right, "Right" },
+    { NEXT_ROW_MARKER, 0 },
+    { Qt::Key_Space, "Space" },
+    { Qt::Window,"WINKEY"},
+    { Qt::Key_hyphen, "-" },
+    { Qt::Key_Plus, "+"},
+    { Qt::Key_Comma, ","},
+    { Qt::Key_Slash, "/"},
+    { Qt::Key_Semicolon,";"},
+    { Qt::Key_Apostrophe, "'"},
+    { Qt::Key_Period, "."}
 };
 
 const static int layoutSize = (sizeof(keyboardLayoutLower) / sizeof(KeyboardLayoutEntry));
@@ -218,6 +230,30 @@ void Keyboard::buttonClicked(int key)
     case Qt::Key_F8 : vkey.ki.wVk = VK_F8;
         break;
     case Qt::Key_F9 : vkey.ki.wVk = VK_F9;
+        break;
+    case Qt::Key_Comma: vkey.ki.wVk = VK_OEM_COMMA;
+        break;
+    case Qt::Key_Up: vkey.ki.wVk = VK_UP;
+        break;
+    case Qt::Key_Down: vkey.ki.wVk = VK_DOWN;
+        break;
+    case Qt::Key_Left: vkey.ki.wVk = VK_LEFT;
+        break;
+    case Qt::Key_Right: vkey.ki.wVk = VK_RIGHT;
+        break;
+    case Qt::Key_hyphen : vkey.ki.wVk = VK_OEM_MINUS;
+        break;
+    case Qt::Key_Slash : vkey.ki.wVk = VK_OEM_SLASH;
+        break;
+    case Qt::Key_Semicolon : vkey.ki.wVk = VK_OEM_2;
+        break;
+    case Qt::Key_Apostrophe : vkey.ki.wVk = VK_OEM_7;
+        break;
+    case Qt::Key_Period : vkey.ki.wVk = VK_OEM_PERIOD ;
+        break;
+    case Qt::Key_Plus: vkey.ki.wVk = VK_OEM_PLUS;
+        break;
+    case Qt::Window: vkey.ki.wVk = VK_RWIN;
         break;
 
     default : vkey.ki.wVk = key; // virtual-key code
