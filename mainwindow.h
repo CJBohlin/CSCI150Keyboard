@@ -35,6 +35,7 @@ private slots:
     void pickBlackTheme();
     void pickWhiteTheme();
     void pickHackerTheme();
+    void useTabMacro();
 private:
     void createActions();
     void createMenus();
@@ -43,6 +44,7 @@ private:
     QMenu *fileMenu;
     QMenu *editMenu;
     QMenu *themeMenu;
+    QMenu *macroMenu;
     QMenu *formatMenu;
     QMenu *helpMenu;
     QActionGroup *alignmentGroup;
@@ -51,6 +53,7 @@ private:
     QAction *blackTheme;
     QAction *whiteTheme;
     QAction *hackerTheme;
+    QAction *tabMacro;
     QLabel *infoLabel;
 };
 

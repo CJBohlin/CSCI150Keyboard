@@ -100,6 +100,11 @@ void MainWindow::pickHackerTheme()
     this->setStyleSheet("background-color: black;");
 }
 
+void MainWindow::useTabMacro()
+{
+    keyboard.tabMacro();
+}
+
 void MainWindow::createActions()
 {
     randomTheme = new QAction(tr("&Random"), this);
@@ -108,20 +113,24 @@ void MainWindow::createActions()
     connect(randomTheme, &QAction::triggered, this, &MainWindow::pickRandomTheme);
 
     defaultTheme = new QAction(tr("&Defualt"), this);
-    defaultTheme->setStatusTip(tr("Change to random theme"));
+    defaultTheme->setStatusTip(tr("Change to default theme"));
     connect(defaultTheme, &QAction::triggered, this, &MainWindow::pickDefaultTheme);
 
     blackTheme = new QAction(tr("&Black"), this);
-    blackTheme->setStatusTip(tr("Change to random theme"));
+    blackTheme->setStatusTip(tr("Change to black theme"));
     connect(blackTheme, &QAction::triggered, this, &MainWindow::pickBlackTheme);
 
     whiteTheme = new QAction(tr("&White"), this);
-    whiteTheme->setStatusTip(tr("Change to random theme"));
+    whiteTheme->setStatusTip(tr("Change to white theme"));
     connect(whiteTheme, &QAction::triggered, this, &MainWindow::pickWhiteTheme);
 
     hackerTheme = new QAction(tr("&Hacker"), this);
-    hackerTheme->setStatusTip(tr("Change to random theme"));
+    hackerTheme->setStatusTip(tr("Change to hacker theme"));
     connect(hackerTheme, &QAction::triggered, this, &MainWindow::pickHackerTheme);
+
+    tabMacro = new QAction(tr("&Alt+Tab"), this);
+    tabMacro->setStatusTip(tr("Alt Tab"));
+    connect(tabMacro, &QAction::triggered, this, &MainWindow::useTabMacro);
 
 }
 
@@ -134,4 +143,6 @@ void MainWindow::createMenus()
     themeMenu->addAction(blackTheme);
     themeMenu->addAction(whiteTheme);
     themeMenu->addAction(hackerTheme);
+    macroMenu = menuBar()->addMenu(tr("&Macros"));
+    macroMenu->addAction(tabMacro);
 }
