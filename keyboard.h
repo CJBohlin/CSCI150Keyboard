@@ -15,6 +15,7 @@ public:
     QPushButton *buttons [56] = {};
     explicit Keyboard(QWidget *parent = Q_NULLPTR);
     int offset=0;
+    void tabMacro();
 
 public slots:
     void showKeyboard(int globalX, int globalY);

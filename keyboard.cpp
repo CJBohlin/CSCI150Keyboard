@@ -236,3 +236,24 @@ void Keyboard::buttonClicked(int key)
     return;
     #endif
 }
+
+void Keyboard::tabMacro() {
+    #ifdef Q_OS_WIN
+    INPUT vkey;
+    vkey.type = INPUT_KEYBOARD;
+    vkey.ki.wScan = 0; // hardware scan code for key
+    vkey.ki.time = 0;
+    vkey.ki.dwExtraInfo = 0;
+    vkey.ki.dwFlags = 0; // 0 for key press
+    vkey.ki.wVk = VK_MENU;
+    SendInput(1, &vkey, sizeof(INPUT));
+    vkey.ki.wVk = VK_TAB;
+    SendInput(1, &vkey, sizeof(INPUT));
+    Sleep(2000);
+    vkey.ki.dwFlags = KEYEVENTF_KEYUP;
+    SendInput(1, &vkey, sizeof(INPUT));
+    vkey.ki.wVk = VK_MENU;
+    SendInput(1, &vkey, sizeof(INPUT));
+    return;
+    #endif
+}
