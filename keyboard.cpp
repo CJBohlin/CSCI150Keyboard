@@ -31,12 +31,13 @@ KeyboardLayoutEntry keyboardLayoutLower[] = {
     { Qt::Key_F7,"F7"},
     { Qt::Key_F8,"F8"},
     { Qt::Key_F9,"F9"},
-    //{ Qt::Key_F1,"F10"},
-    //{ Qt::Key_F1,"F11"},
-    //{ Qt::Key_F1,"F12"},
-    //{ Qt::Key_PowerOff,"Power"},
-    { Qt::Key_Backspace, "<-" },
+    { Qt::Key_F1,"F10"},
+    { Qt::Key_F1,"F11"},
+    { Qt::Key_F1,"F12"},
+    { Qt::Key_Print,"Prt Sc"},
+    { Qt::Key_Delete, "Delete" },
     { NEXT_ROW_MARKER, 0 },
+    { Qt::Key_QuoteLeft, "`"},
     { Qt::Key_1, "1" },
     { Qt::Key_2, "2" },
     { Qt::Key_3, "3" },
@@ -47,8 +48,11 @@ KeyboardLayoutEntry keyboardLayoutLower[] = {
     { Qt::Key_8, "8" },
     { Qt::Key_9, "9" },
     { Qt::Key_0, "0" },
-    { Qt::Key_Tab, "Tab"},
+    { Qt::Key_Minus, "-" },
+    { Qt::Key_Equal, "=" },
+    { Qt::Key_Backspace, "<-" },
     { NEXT_ROW_MARKER, 0 },
+    { Qt::Key_Tab, "Tab"},
     { Qt::Key_Q, "q" },
     { Qt::Key_W, "w" },
     { Qt::Key_E, "e" },
@@ -59,8 +63,11 @@ KeyboardLayoutEntry keyboardLayoutLower[] = {
     { Qt::Key_I, "i" },
     { Qt::Key_O, "o" },
     { Qt::Key_P, "p" },
-    { Qt::Key_Shift, "Shift" },
+    { Qt::Key_BracketLeft, "[" },
+    { Qt::Key_BracketRight, "]" },
+    { Qt::Key_Backslash, "\\" },
     { NEXT_ROW_MARKER, 0 },
+    { Qt::Key_CapsLock, "Caps"},
     { Qt::Key_A, "a" },
     { Qt::Key_S, "s" },
     { Qt::Key_D, "d" },
@@ -70,8 +77,11 @@ KeyboardLayoutEntry keyboardLayoutLower[] = {
     { Qt::Key_J, "j" },
     { Qt::Key_K, "k" },
     { Qt::Key_L, "l" },
-    { Qt::Key_CapsLock, "Caps" },
+    { Qt::Key_Semicolon, ";" },
+    { Qt::Key_Apostrophe, "'" },
+    { Qt::Key_Enter, "Enter" },
     { NEXT_ROW_MARKER, 0 },
+    { Qt::Key_Shift, "Shift" },
     { Qt::Key_Z, "z" },
     { Qt::Key_X, "x" },
     { Qt::Key_C, "c" },
@@ -79,8 +89,22 @@ KeyboardLayoutEntry keyboardLayoutLower[] = {
     { Qt::Key_B, "b" },
     { Qt::Key_N, "n" },
     { Qt::Key_M, "m" },
-    { Qt::Key_Enter, "Enter" },
-    { Qt::Key_Space, "Space" }
+    { Qt::Key_Comma, "," },
+    { Qt::Key_Period, "." },
+    { Qt::Key_Slash, "/" },
+    { Qt::Key_Shift, "Shift" },
+    { NEXT_ROW_MARKER, 0 },
+    { Qt::Key_Control, "Ctrl" },
+    {7007, "Fn" },
+    {7008, "Win" },
+    { Qt::Key_Menu, "Alt" },
+    { Qt::Key_Space, "Space" },
+    { Qt::Key_Menu, "Alt" },
+    { Qt::Key_Control, "Ctrl" },
+    { Qt::Key_Left, "<" },
+    { Qt::Key_Up, "^" },
+    { Qt::Key_Down, "v" },
+    { Qt::Key_Right, ">" }
 };
 
 const static int layoutSize = (sizeof(keyboardLayoutLower) / sizeof(KeyboardLayoutEntry));
@@ -117,25 +141,33 @@ Keyboard::Keyboard(QWidget *parent)
         this->buttons[i] = button;
         switch(g_theme){
         case 0:
-            button->setFixedWidth(70);
+            if (keyboardLayoutLower[i].key == Qt::Key_Tab || keyboardLayoutLower[i].key == Qt::Key_Backspace || keyboardLayoutLower[i].key == Qt::Key_Enter || keyboardLayoutLower[i].key == Qt::Key_CapsLock || keyboardLayoutLower[i].key == Qt::Key_Shift) button->setFixedSize(70,999);
+            else if (keyboardLayoutLower[i].key == Qt::Key_Space) button->setFixedSize(140,999);
+            else button->setFixedSize(1,999);
             button->setText(QString::fromLatin1(keyboardLayoutLower[i].label));
             button->setStyleSheet("QPushButton:hover {background-color:red;border-style: outset;border-width: 2px;border-radius: 10px;border-color: beige; font: bold 18px;min-width: 3em;min-height:2em;padding: 6px;color:white;} QPushButton:!hover { background-color: grey;border-style: outset;border-width: 2px;border-radius: 10px;border-color: beige; font: bold 18px;min-width: 3em;min-height:2em;padding: 6px;color:white; }");
             mapper->setMapping(button, keyboardLayoutLower[i].key);
             break;
         case 1:
-            button->setFixedWidth(70);
+            if (keyboardLayoutLower[i].key == Qt::Key_Tab || keyboardLayoutLower[i].key == Qt::Key_Backspace || keyboardLayoutLower[i].key == Qt::Key_Enter || keyboardLayoutLower[i].key == Qt::Key_CapsLock || keyboardLayoutLower[i].key == Qt::Key_Shift) button->setFixedSize(70,999);
+            else if (keyboardLayoutLower[i].key == Qt::Key_Space) button->setFixedSize(140,999);
+            else button->setFixedSize(1,999);
             button->setText(QString::fromLatin1(keyboardLayoutLower[i].label));
             button->setStyleSheet("QPushButton:hover {background-color: gray;border-style: outset;border-width: 2px;border-radius: 10px;border-color: beige; font: bold 18px;min-width: 3em;min-height:2em;padding: 6px;color:white;} QPushButton:!hover { background-color: black;border-style: outset;border-width: 2px;border-radius: 10px;border-color: beige; font: bold 18px;min-width: 3em;min-height:2em;padding: 6px;color:white;}");
             mapper->setMapping(button, keyboardLayoutLower[i].key);
             break;
         case 2:
-            button->setFixedWidth(70);
+            if (keyboardLayoutLower[i].key == Qt::Key_Tab || keyboardLayoutLower[i].key == Qt::Key_Backspace || keyboardLayoutLower[i].key == Qt::Key_Enter || keyboardLayoutLower[i].key == Qt::Key_CapsLock || keyboardLayoutLower[i].key == Qt::Key_Shift) button->setFixedSize(70,999);
+            else if (keyboardLayoutLower[i].key == Qt::Key_Space) button->setFixedSize(140,999);
+            else button->setFixedSize(1,999);
             button->setText(QString::fromLatin1(keyboardLayoutLower[i].label));
             button->setStyleSheet("QPushButton:hover {background-color: gray;border-style: outset;border-width: 2px;border-radius: 10px;border-color: beige; font: bold 18px;min-width: 3em;min-height:2em;padding: 6px;color:white;} QPushButton:!hover { background-color: white;border-style: outset;border-width: 2px;border-radius: 10px;border-color: gray; font: bold 18px;min-width: 3em;min-height:2em;padding: 6px;color:gray;}");
             mapper->setMapping(button, keyboardLayoutLower[i].key);
             break;
         case 3:
-            button->setFixedWidth(70);
+            if (keyboardLayoutLower[i].key == Qt::Key_Tab || keyboardLayoutLower[i].key == Qt::Key_Backspace || keyboardLayoutLower[i].key == Qt::Key_Enter || keyboardLayoutLower[i].key == Qt::Key_CapsLock || keyboardLayoutLower[i].key == Qt::Key_Shift) button->setFixedSize(70,999);
+            else if (keyboardLayoutLower[i].key == Qt::Key_Space) button->setFixedSize(140,999);
+            else button->setFixedSize(1,999);
             button->setText(QString::fromLatin1(keyboardLayoutLower[i].label));
             button->setStyleSheet("QPushButton:hover {background-color: black;border-style: outset;border-width: 2px;border-radius: 10px;border-color: gray; font: bold 18px;min-width: 3em;min-height:2em;padding: 6px;color:white;} QPushButton:!hover { background-color: black;border-style: outset;border-width: 2px;border-radius: 10px;border-color: gray; font: bold 18px;min-width: 3em;min-height:2em;padding: 6px;color:green;}");
             mapper->setMapping(button, keyboardLayoutLower[i].key);
@@ -218,6 +250,48 @@ void Keyboard::buttonClicked(int key)
     case Qt::Key_F8 : vkey.ki.wVk = VK_F8;
         break;
     case Qt::Key_F9 : vkey.ki.wVk = VK_F9;
+        break;
+    case Qt::Key_F10 : vkey.ki.wVk = VK_F10;
+        break;
+    case Qt::Key_F11 : vkey.ki.wVk = VK_F11;
+        break;
+    case Qt::Key_F12 : vkey.ki.wVk = VK_F12;
+        break;
+    case Qt::Key_Print : vkey.ki.wVk = VK_SNAPSHOT;
+        break;
+    case Qt::Key_Delete : vkey.ki.wVk = VK_DELETE;
+        break;
+    case Qt::Key_QuoteLeft : vkey.ki.wVk = VK_OEM_3;
+        break;
+    case Qt::Key_Minus : vkey.ki.wVk = VK_OEM_MINUS;
+        break;
+    case Qt::Key_Equal : vkey.ki.wVk = VK_OEM_PLUS;
+        break;
+    case Qt::Key_Semicolon : vkey.ki.wVk = VK_OEM_1;
+        break;
+    case Qt::Key_Apostrophe : vkey.ki.wVk = VK_OEM_7;
+        break;
+    case Qt::Key_Comma : vkey.ki.wVk = VK_OEM_COMMA;
+        break;
+    case Qt::Key_Period : vkey.ki.wVk = VK_OEM_PERIOD;
+        break;
+    case Qt::Key_Slash : vkey.ki.wVk = VK_OEM_2;
+        break;
+    case Qt::Key_Control : vkey.ki.wVk = VK_CONTROL;
+        break;
+    case 7007 : vkey.ki.wVk = 0xFF;
+        break;
+    case 7008 : vkey.ki.wVk = VK_LWIN;
+        break;
+    case Qt::Key_Menu : vkey.ki.wVk = VK_MENU;
+        break;
+    case Qt::Key_Left : vkey.ki.wVk = VK_LEFT;
+        break;
+    case Qt::Key_Up : vkey.ki.wVk = VK_UP;
+        break;
+    case Qt::Key_Down : vkey.ki.wVk = VK_DOWN;
+        break;
+    case Qt::Key_Right : vkey.ki.wVk = VK_RIGHT;
         break;
 
     default : vkey.ki.wVk = key; // virtual-key code

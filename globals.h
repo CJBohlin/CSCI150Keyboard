@@ -2,5 +2,6 @@
 #define GLOBALS_H
 
 extern int g_theme;
+extern const int buttonNumber;
 
 #endif

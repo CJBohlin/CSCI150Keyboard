@@ -2,6 +2,7 @@
 #define KEYBOARD_H
 #include <QGridLayout>
 #include <QPushButton>
+#include "globals.h"
 
 #include <QWidget>
 
@@ -12,7 +13,7 @@ class Keyboard : public QWidget
     Q_OBJECT
 
 public:
-    QPushButton *buttons [56] = {};
+    QPushButton *buttons [84] = {};
     explicit Keyboard(QWidget *parent = Q_NULLPTR);
     int offset=0;
     void tabMacro();

@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow();
     Keyboard keyboard;
-    QPushButton *buttons[56] = {};
+    QPushButton *buttons[84] = {};
     void getbuttons(const Keyboard &a) {
         for (int i=0; i<56;i++){
             this->buttons[i] = a.buttons[i];
